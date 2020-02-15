@@ -1,0 +1,25 @@
+version: '3.5'
+
+services:
+  nest-app-server:
+    container_name: nest-app-server
+    image: nest-app-server/nest
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    volumes:
+      - ./:/app
+    ports:
+      - '3000:3000'
+    depends_on:
+      - nest-app-mongodb
+    restart: always
+
+  nest-app-mongodb:
+    container_name: nest-app-mongodb
+    image: mongo
+    volumes:
+      - .docker/mongodb:/data/db
+    ports:
+      - '27017:27017'
+    restart: always
